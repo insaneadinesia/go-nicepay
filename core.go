@@ -35,8 +35,13 @@ func (gateway *CoreGateway) Payment(w http.ResponseWriter, req *PaymentRequest) 
 	req.CallBackURL = gateway.Client.CallbackURL
 
 	path := gateway.Client.APIEnvType.String() + "/nicepay/direct/v2/payment"
+	location := "vendor/github.com/insaneadinesia/go-nicepay/payment.html"
 
-	t, err := template.ParseFiles("vendor/github.com/insaneadinesia/go-nicepay/payment.html")
+	if len(gateway.Client.CustomPaymentHtmlPath) > 0 {
+		location = gateway.Client.CustomPaymentHtmlPath
+	}
+
+	t, err := template.ParseFiles(location)
 	if err != nil {
 		return err
 	}

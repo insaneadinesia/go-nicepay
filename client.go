@@ -10,11 +10,12 @@ import (
 )
 
 type Client struct {
-	APIEnvType  Env
-	MID         string
-	MKey        string
-	NotifURL    string
-	CallbackURL string
+	APIEnvType            Env
+	MID                   string
+	MKey                  string
+	NotifURL              string
+	CallbackURL           string
+	CustomPaymentHtmlPath string
 }
 
 func NewCient() Client {
