@@ -36,7 +36,7 @@ func (gateway *CoreGateway) Payment(w http.ResponseWriter, req *PaymentRequest) 
 
 	path := gateway.Client.APIEnvType.String() + "/nicepay/direct/v2/payment"
 
-	t, err := template.ParseFiles("go-nicepay/payment.html")
+	t, err := template.ParseFiles("vendor/github.com/insaneadinesia/go-nicepay/payment.html")
 	if err != nil {
 		return err
 	}
