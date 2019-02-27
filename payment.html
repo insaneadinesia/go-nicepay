@@ -1,0 +1,24 @@
+{{ $inputs := .Inputs }}
+<html>
+
+<head>
+  <title>Payment Page</title>
+</head>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+    document.getElementById('payment').submit();
+  });
+</script>
+
+<body>
+  <form action="{{.URL}}" method="post" id="payment">
+    {{range $input := $inputs}}
+    <input type="hidden" name="{{$input.Name}}" id="{{$input.Name}}" value="{{$input.Value}}">
+    {{end}}
+    <button type="submit" style="display:none;">Submit</button>
+  </form>
+</body>
+
+</html>
