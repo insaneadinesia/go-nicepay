@@ -12,8 +12,11 @@ type CoreGateway struct {
 }
 
 func (gateway *CoreGateway) Registration(req *RegistrationRequest) (Response, error) {
-	req.IMID = gateway.Client.MID
 	req.DBProcessURL = gateway.Client.NotifURL
+
+	if len(req.IMID) == 0 {
+		req.IMID = gateway.Client.MID
+	}
 
 	path := gateway.Client.APIEnvType.String() + "/nicepay/direct/v2/registration"
 	resp := Response{}
@@ -76,7 +79,9 @@ func (gateway *CoreGateway) Payment(w http.ResponseWriter, req *PaymentRequest) 
 }
 
 func (gateway *CoreGateway) GetOrderStatus(req *OrderStatusRequest) (Response, error) {
-	req.IMID = gateway.Client.MID
+	if len(req.IMID) == 0 {
+		req.IMID = gateway.Client.MID
+	}
 
 	path := gateway.Client.APIEnvType.String() + "/nicepay/direct/v2/inquiry"
 	resp := Response{}
@@ -95,8 +100,10 @@ func (gateway *CoreGateway) GetOrderStatus(req *OrderStatusRequest) (Response, e
 }
 
 func (gateway *CoreGateway) GenerateMerchantToken(req *Token) string {
-	req.IMID = gateway.Client.MID
-	req.MerchantKey = gateway.Client.MKey
+	if len(req.IMID) == 0 && len(req.MerchantKey) == 0 {
+		req.IMID = gateway.Client.MID
+		req.MerchantKey = gateway.Client.MKey
+	}
 
 	str := req.TimeStamp + req.IMID + req.ReferenceNo + req.Amt + req.MerchantKey
 	token := Sha256(str)
