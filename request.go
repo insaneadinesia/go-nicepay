@@ -120,3 +120,21 @@ type Token struct {
 	Amt         string `json:"amt"`
 	MerchantKey string `json:"merchantKey"`
 }
+
+type CancelRequest struct {
+	TimeStamp      string `json:"timeStamp"`
+	TXID           string `json:"tXid"`
+	IMID           string `json:"iMid"`
+	PayMethod      string `json:"payMethod"`
+	CancelType     string `json:"cancelType"`
+	CancelMsg      string `json:"cancelMsg"`
+	MerchantToken  string `json:"merchantToken"`
+	PreauthToken   string `json:"preauthToken"`
+	Amt            string `json:"amt"`
+	CancelServerIP string `json:"cancelServerIp"`
+	CancelUserID   string `json:"cancelUserId"`
+	CancelUserIP   string `json:"cancelUserIp"`
+	CancelUserInfo string `json:"cancelUserInfo"`
+	CancelRetryCnt string `json:"cancelRetryCnt"`
+	Worker         string `json:"worker"`
+}

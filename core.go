@@ -99,6 +99,27 @@ func (gateway *CoreGateway) GetOrderStatus(req *OrderStatusRequest) (Response, e
 	return resp, nil
 }
 
+func (gateway *CoreGateway) Cancel(req *CancelRequest) (Response, error) {
+	if len(req.IMID) == 0 {
+		req.IMID = gateway.Client.MID
+	}
+
+	path := gateway.Client.APIEnvType.String() + "/nicepay/direct/v2/cancel"
+	resp := Response{}
+	jsonReq, _ := json.Marshal(req)
+
+	headers := []Header{
+		Header{Key: "Content-Type", Value: "application/json"},
+	}
+
+	err := gateway.Client.CallRequest("POST", path, headers, bytes.NewBuffer(jsonReq), &resp)
+	if err != nil {
+		return resp, err
+	}
+
+	return resp, nil
+}
+
 func (gateway *CoreGateway) GenerateMerchantToken(req *Token) string {
 	if len(req.IMID) == 0 && len(req.MerchantKey) == 0 {
 		req.IMID = gateway.Client.MID
